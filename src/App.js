@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
 
 export default function AdmissionForm() {
   const [formData, setFormData] = useState({
@@ -18,6 +17,12 @@ export default function AdmissionForm() {
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     document.body.appendChild(script);
+  }, []);
+
+  useEffect(() => {
+    axios.get("https://kautilyaclassesbadami.onrender.com/api/admission/test")
+      .then(response => console.log("Server is live: ", response.data))
+      .catch(error => console.error("Error checking server status:", error));
   }, []);
 
   const handleChange = (e) => {
@@ -69,7 +74,7 @@ export default function AdmissionForm() {
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
       <h1 className="text-3xl font-bold text-center mb-4 text-blue-700">Kautilya Coaching Classes, Badami</h1>
-      <h2 className="text-xl font-semibold text-center mb-6">Admission Form</h2>
+      <h2 className="text-xl font-semibold text-center mb-6">School Admission Form</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {Object.keys(formData).map((key) => (
           <div key={key} className="flex flex-col">
@@ -90,7 +95,7 @@ export default function AdmissionForm() {
           Pay and Register
         </button>
       </form>
-      <footer className="text-center mt-6 text-gray-500">Designed by Prasad R</footer>
+      <footer className="text-center mt-6 text-gray-500">Designed by Prasad R </footer>
     </div>
   );
 }
