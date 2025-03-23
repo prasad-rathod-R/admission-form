@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AdmissionForm() {
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -20,6 +24,20 @@ export default function AdmissionForm() {
     script.async = true;
     document.body.appendChild(script);
   }, []);
+
+  useEffect(() => {
+    axios.get("https://kautilyaclassesbadami.onrender.com/api/admission/test")
+      .then(() => toast.success("Server is live!"))
+      .catch(() => toast.error("Error checking server status"));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
+
+  const toggleTheme = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,14 +57,10 @@ export default function AdmissionForm() {
         description: "Payment for school admission",
         order_id: order.id,
         handler: async function (response) {
-          await axios.post("http://localhost:8080/api/admission/sendEmail", {
-            name: formData.name,
-            email: formData.email,
+          await axios.post("https://kautilyaclassesbadami.onrender.com/api/admission/sendEmail", {
+            ...formData,
             transactionId: response.razorpay_payment_id,
-            receiptId: order.receipt,
-            amount: formData.fees,
-            aadharNumber: formData.aadharNumber,
-            parentPhoneNumber: formData.parentPhone
+            receiptId: order.receipt
           });
           toast.success("Payment Successful and Email Sent!");
         },
@@ -63,32 +77,43 @@ export default function AdmissionForm() {
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
     } catch (error) {
-      alert("Payment failed: " + (error.response?.data || error.message));
+      toast.error("Payment failed: " + (error.response?.data?.message || error.message));
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-xl">
-      <h1 className="text-3xl font-bold text-center mb-4">Kautilya Coaching Classes, Badami</h1>
-      <h2 className="text-2xl font-bold text-center mb-4">School Admission Form</h2>
+    <div className={`max-w-lg mx-auto p-6 shadow-md rounded-xl mt-10 relative ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <div className="absolute top-4 right-4 flex flex-col space-y-4">
+        <button onClick={toggleTheme} className="p-2 bg-gray-600 text-white rounded-full w-10 h-10 flex items-center justify-center">
+          {darkMode ? "☀️" : "🌙"}
+        </button>
+        <a href="https://kautilyaclassesbadami.onrender.com/api/admission/test" className="p-2 bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center text-sm">
+          🔗
+        </a>
+      </div>
+      <h1 className="text-3xl font-bold text-center mb-4 text-blue-700">Kautilya Coaching Classes, Badami</h1>
+      <h2 className="text-xl font-semibold text-center mb-6">Admission Form</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {Object.keys(formData).map((key) => (
-          <input
-            key={key}
-            type="text"
-            name={key}
-            value={formData[key]}
-            onChange={handleChange}
-            placeholder={key.replace(/([A-Z])/g, ' $1').trim()}
-            className="w-full p-2 border rounded-md"
-            required
-          />
+          <div key={key} className="flex flex-col">
+            <label className="font-medium capitalize" htmlFor={key}>{key.replace(/([A-Z])/g, ' $1').trim()}:</label>
+            <input
+              type={key === "email" ? "email" : key === "contactNumber" || key === "admissionAmount" ? "number" : "text"}
+              id={key}
+              name={key}
+              value={formData[key]}
+              onChange={handleChange}
+              placeholder={key.replace(/([A-Z])/g, ' $1').trim()}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
         ))}
         <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition">
           Pay and Register
         </button>
       </form>
-      <footer className="text-center mt-4 text-gray-600">Designed by Prasad Rathod</footer>
+      <footer className="text-center mt-6 text-gray-500">Designed by Prasad R</footer>
     </div>
   );
 }
