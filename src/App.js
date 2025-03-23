@@ -82,7 +82,7 @@ export default function AdmissionForm() {
   };
 
   return (
-    <div className={`max-w-lg mx-auto p-6 shadow-md rounded-xl mt-10 relative ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    <div className={`max-w-lg mx-auto p-6 shadow-md rounded-xl mt-10 relative ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <div className="absolute top-4 right-4 flex flex-col space-y-4">
         <button onClick={toggleTheme} className="p-2 bg-gray-600 text-white rounded-full w-10 h-10 flex items-center justify-center">
           {darkMode ? "☀️" : "🌙"}
@@ -98,13 +98,13 @@ export default function AdmissionForm() {
           <div key={key} className="flex flex-col">
             <label className="font-medium capitalize" htmlFor={key}>{key.replace(/([A-Z])/g, ' $1').trim()}:</label>
             <input
-              type={key === "email" ? "email" : key === "contactNumber" || key === "admissionAmount" ? "number" : "text"}
+              type={key === "admissionDate" ? "date" : key === "email" ? "email" : key === "contactNumber" || key === "admissionAmount" ? "number" : "text"}
               id={key}
               name={key}
               value={formData[key]}
               onChange={handleChange}
               placeholder={key.replace(/([A-Z])/g, ' $1').trim()}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}
               required
             />
           </div>
