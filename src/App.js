@@ -3,13 +3,14 @@ import axios from "axios";
 
 export default function AdmissionForm() {
   const [formData, setFormData] = useState({
-    name: "",
-    number: "",
+    firstName: "",
+    lastName: "",
+    fatherName: "",
+    contactNumber: "",
     email: "",
-    fees: "",
-    aadharNumber: "",
+    admissionAmount: "",
     address: "",
-    parentPhone: ""
+    admissionDate: ""
   });
 
   useEffect(() => {
@@ -44,20 +45,23 @@ export default function AdmissionForm() {
         order_id: order.id,
         handler: async function (response) {
           await axios.post("https://kautilyaclassesbadami.onrender.com/api/admission/sendEmail", {
-            name: formData.name,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
             email: formData.email,
             transactionId: response.razorpay_payment_id,
             receiptId: order.receipt,
-            amount: formData.fees,
-            aadharNumber: formData.aadharNumber,
-            parentPhoneNumber: formData.parentPhone
+            amount: formData.admissionAmount,
+            address: formData.address,
+            admissionDate: formData.admissionDate,
+            fatherName: formData.fatherName,
+            contactNumber: formData.contactNumber
           });
           alert("Payment Successful and Email Sent!");
         },
         prefill: {
-          name: formData.name,
+          name: `${formData.firstName} ${formData.lastName}`,
           email: formData.email,
-          contact: formData.number
+          contact: formData.contactNumber
         },
         theme: {
           color: "#3399cc"
@@ -74,7 +78,7 @@ export default function AdmissionForm() {
   return (
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
       <h1 className="text-3xl font-bold text-center mb-4 text-blue-700">Kautilya Coaching Classes, Badami</h1>
-      <h2 className="text-xl font-semibold text-center mb-6">School Admission Form</h2>
+      <h2 className="text-xl font-semibold text-center mb-6">Admission Form</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {Object.keys(formData).map((key) => (
           <div key={key} className="flex flex-col">
@@ -95,7 +99,10 @@ export default function AdmissionForm() {
           Pay and Register
         </button>
       </form>
-      <footer className="text-center mt-6 text-gray-500">Designed by Prasad R </footer>
+      <div className="text-center mt-4">
+        <a href="https://kautilyaclassesbadami.onrender.com/api/admission/test" className="text-blue-600 hover:underline">Test Server</a>
+      </div>
+      <footer className="text-center mt-6 text-gray-500">Designed by Prasad R</footer>
     </div>
   );
 }
