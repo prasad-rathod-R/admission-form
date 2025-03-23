@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 export default function AdmissionForm() {
+  const [darkMode, setDarkMode] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -22,8 +27,8 @@ export default function AdmissionForm() {
 
   useEffect(() => {
     axios.get("https://kautilyaclassesbadami.onrender.com/api/admission/test")
-      .then(response => console.log("Server is live: ", response.data))
-      .catch(error => console.error("Error checking server status:", error));
+      .then(response => toast.success("Server is live!"))
+      .catch(error => toast.error("Error checking server status"));
   }, []);
 
   const handleChange = (e) => {
@@ -56,7 +61,7 @@ export default function AdmissionForm() {
             fatherName: formData.fatherName,
             contactNumber: formData.contactNumber
           });
-          alert("Payment Successful and Email Sent!");
+          toast.success("Payment Successful and Email Sent!");
         },
         prefill: {
           name: `${formData.firstName} ${formData.lastName}`,
@@ -71,18 +76,21 @@ export default function AdmissionForm() {
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
     } catch (error) {
-      alert("Payment failed: " + (error.response?.data || error.message));
+      toast.error("Payment failed: " + (error.response?.data || error.message));
     }
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
+    <div className={`max-w-lg mx-auto p-6 shadow-md rounded-xl mt-10 ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <button onClick={() => setDarkMode(!darkMode)} className="absolute top-4 right-4 p-2 bg-gray-600 text-white rounded">
+        {darkMode ? "Light Mode" : "Dark Mode"}
+      </button>
       <h1 className="text-3xl font-bold text-center mb-4 text-blue-700">Kautilya Coaching Classes, Badami</h1>
       <h2 className="text-xl font-semibold text-center mb-6">Admission Form</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {Object.keys(formData).map((key) => (
           <div key={key} className="flex flex-col">
-            <label className="font-medium text-gray-700 capitalize" htmlFor={key}>{key.replace(/([A-Z])/g, ' $1').trim()}:</label>
+            <label className="font-medium capitalize" htmlFor={key}>{key.replace(/([A-Z])/g, ' $1').trim()}:</label>
             <input
               type="text"
               id={key}
@@ -102,7 +110,7 @@ export default function AdmissionForm() {
       <div className="text-center mt-4">
         <a href="https://kautilyaclassesbadami.onrender.com/api/admission/test" className="text-blue-600 hover:underline">Test Server</a>
       </div>
-      <footer className="text-center mt-6 text-gray-500">Designed by Prasad R</footer>
+      <footer className="text-center mt-6 text-gray-500">Designed by Prasad</footer>
     </div>
   );
 }
