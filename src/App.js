@@ -9,7 +9,6 @@ export default function AdmissionForm() {
   );
 
   const today = new Date().toISOString().split("T")[0]; // Get today's date
-  
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -20,6 +19,8 @@ export default function AdmissionForm() {
     address: "",
     admissionDate: today // Default to today
   });
+
+  const [amountWarning, setAmountWarning] = useState("");
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -43,11 +44,22 @@ export default function AdmissionForm() {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "admissionAmount") {
+      if (value < 1000) {
+        setAmountWarning("Admission amount should be ₹1000 or more.");
+      } else {
+        setAmountWarning("");
+      }
+    }
+
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const token = localStorage.getItem("jwtToken");
       const response = await axios.post("https://kautilyaclassesbadami.onrender.com/api/admission/pay", formData, {
@@ -116,6 +128,9 @@ export default function AdmissionForm() {
               required
               {...(key === "admissionDate" ? { min: today, disabled: true } : {})} // Prevent past dates & disable editing
             />
+            {key === "admissionAmount" && amountWarning && (
+              <p className="text-red-500 text-sm mt-1">{amountWarning}</p>
+            )}
           </div>
         ))}
         <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition">
