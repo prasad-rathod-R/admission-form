@@ -7,6 +7,9 @@ export default function AdmissionForm() {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
   );
+
+  const today = new Date().toISOString().split("T")[0]; // Get today's date
+  
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -15,7 +18,7 @@ export default function AdmissionForm() {
     email: "",
     admissionAmount: "",
     address: "",
-    admissionDate: ""
+    admissionDate: today // Default to today
   });
 
   useEffect(() => {
@@ -46,7 +49,10 @@ export default function AdmissionForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://kautilyaclassesbadami.onrender.com/api/admission/pay", formData);
+      const token = localStorage.getItem("jwtToken");
+      const response = await axios.post("https://kautilyaclassesbadami.onrender.com/api/admission/pay", formData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       const order = response.data;
       
       const options = {
@@ -61,6 +67,8 @@ export default function AdmissionForm() {
             ...formData,
             transactionId: response.razorpay_payment_id,
             receiptId: order.receipt
+          }, {
+            headers: { Authorization: `Bearer ${token}` }
           });
           toast.success("Payment Successful and Email Sent!");
         },
@@ -106,6 +114,7 @@ export default function AdmissionForm() {
               placeholder={key.replace(/([A-Z])/g, ' $1').trim()}
               className={`w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}
               required
+              {...(key === "admissionDate" ? { min: today, disabled: true } : {})} // Prevent past dates & disable editing
             />
           </div>
         ))}
