@@ -27,7 +27,7 @@ export default function AdmissionForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/admission/pay", formData);
+      const response = await axios.post("https://kautilyaclassesbadami.onrender.com/api/admission/pay", formData);
       const order = response.data;
       
       const options = {
@@ -38,7 +38,7 @@ export default function AdmissionForm() {
         description: "Payment for school admission",
         order_id: order.id,
         handler: async function (response) {
-          await axios.post("http://localhost:8080/api/admission/sendEmail", {
+          await axios.post("https://kautilyaclassesbadami.onrender.com/api/admission/sendEmail", {
             name: formData.name,
             email: formData.email,
             transactionId: response.razorpay_payment_id,
@@ -67,27 +67,30 @@ export default function AdmissionForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-xl">
-      <h1 className="text-3xl font-bold text-center mb-4">Kautilya Coaching Classes, Badami</h1>
-      <h2 className="text-2xl font-bold text-center mb-4">School Admission Form</h2>
+    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
+      <h1 className="text-3xl font-bold text-center mb-4 text-blue-700">Kautilya Coaching Classes, Badami</h1>
+      <h2 className="text-xl font-semibold text-center mb-6">Admission Form</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {Object.keys(formData).map((key) => (
-          <input
-            key={key}
-            type="text"
-            name={key}
-            value={formData[key]}
-            onChange={handleChange}
-            placeholder={key.replace(/([A-Z])/g, ' $1').trim()}
-            className="w-full p-2 border rounded-md"
-            required
-          />
+          <div key={key} className="flex flex-col">
+            <label className="font-medium text-gray-700 capitalize" htmlFor={key}>{key.replace(/([A-Z])/g, ' $1').trim()}:</label>
+            <input
+              type="text"
+              id={key}
+              name={key}
+              value={formData[key]}
+              onChange={handleChange}
+              placeholder={key.replace(/([A-Z])/g, ' $1').trim()}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
         ))}
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-md">
+        <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition">
           Pay and Register
         </button>
       </form>
-      <footer className="text-center mt-4 text-gray-600">Designed by Prasad Rathod</footer>
+      <footer className="text-center mt-6 text-gray-500">Designed by Prasad R</footer>
     </div>
   );
 }
