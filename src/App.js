@@ -110,7 +110,7 @@ export default function AdmissionForm() {
       <div className="text-center mt-4">
         <a href="https://kautilyaclassesbadami.onrender.com/api/admission/test" className="text-blue-600 hover:underline">Test Server</a>
       </div>
-      <footer className="text-center mt-6 text-gray-500">Designed by Prasad</footer>
+      <footer className="text-center mt-6 text-gray-500">Developed By Prasad</footer>
     </div>
   );
 }
