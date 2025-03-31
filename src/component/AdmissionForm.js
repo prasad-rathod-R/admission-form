@@ -138,7 +138,8 @@ export default function AdmissionForm() {
           </div>
         </div>
       )}
-
+ 
+ 
       {/* Footer */}
       <footer className="text-center mt-6 text-gray-500">
   Designed by{" "}
