@@ -73,29 +73,25 @@ export default function AdmissionForm() {
   };
 
   return (
-    <div className={`max-w-lg mx-auto p-6 shadow-md rounded-xl mt-10 relative ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
+    <div className={`container ${darkMode ? 'bg-dark text-white' : 'bg-light text-dark'} p-4 rounded-3`}>
       {/* Right Menu */}
-      <div className="absolute top-4 right-4 flex flex-col space-y-4">
-        <button onClick={toggleTheme} className="p-2 bg-gray-600 text-white rounded-full w-10 h-10 flex items-center justify-center">
+      <div className="position-absolute top-0 end-0 p-3">
+        <button onClick={toggleTheme} className="btn btn-secondary m-2">
           {darkMode ? "☀️" : "🌙"}
         </button>
-        <a href="https://your-backend-url.com/api/admission/test" className="p-2 bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center text-sm">
-          🔗
-        </a>
-        <button onClick={() => setShowReceipt(true)} className="p-2 bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center">
-          📄
-        </button>
+        <a href="https://your-backend-url.com/api/admission/test" className="btn btn-primary m-2">🔗</a>
+        <button onClick={() => setShowReceipt(true)} className="btn btn-success m-2">📄</button>
       </div>
 
       {/* Title */}
-      <h1 className="text-3xl font-bold text-center mb-4 text-blue-700">Kautilya Coaching Classes, Badami</h1>
-      <h2 className="text-xl font-semibold text-center mb-6">Admission Form</h2>
+      <h1 className="text-center text-primary mb-4">Kautilya Coaching Classes, Badami</h1>
+      <h2 className="text-center mb-4">Admission Form</h2>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit}>
         {Object.keys(formData).map((key) => (
-          <div key={key} className="flex flex-col">
-            <label className="font-medium capitalize" htmlFor={key}>
+          <div key={key} className="mb-3">
+            <label className="form-label" htmlFor={key}>
               {key.replace(/([A-Z])/g, " $1").trim()}:
             </label>
             <input
@@ -105,25 +101,21 @@ export default function AdmissionForm() {
               value={formData[key]}
               onChange={handleChange}
               placeholder={key.replace(/([A-Z])/g, " $1").trim()}
-              className={`w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                darkMode ? "bg-black text-white" : "bg-white text-black"
-              }`}
+              className={`form-control ${darkMode ? 'bg-dark text-white' : ''}`}
               required
               min={key === "admissionAmount" ? "1000" : undefined}
               disabled={key === "admissionDate"}
             />
           </div>
         ))}
-        <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded-md font-semibold hover:bg-blue-700 transition">
-          Pay and Register
-        </button>
+        <button type="submit" className="btn btn-primary w-100">Pay and Register</button>
       </form>
 
       {/* Receipt Preview Modal */}
       {showReceipt && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white text-black p-6 rounded-md shadow-md w-96">
-            <h2 className="text-xl font-semibold mb-4 text-center">Receipt Preview</h2>
+        <div className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center">
+          <div className="bg-white text-dark p-4 rounded shadow-sm w-50">
+            <h2 className="text-center mb-4">Receipt Preview</h2>
             <p><strong>Student:</strong> {formData.firstName} {formData.lastName}</p>
             <p><strong>Father's Name:</strong> {formData.fatherName}</p>
             <p><strong>Contact:</strong> {formData.contactNumber}</p>
@@ -131,24 +123,21 @@ export default function AdmissionForm() {
             <p><strong>Address:</strong> {formData.address}</p>
             <p><strong>Admission Date:</strong> {formData.admissionDate}</p>
             <p><strong>Amount Paid:</strong> ₹{formData.admissionAmount}</p>
-            <div className="flex justify-between mt-4">
-              <button onClick={generateReceiptPDF} className="bg-green-600 text-white px-4 py-2 rounded-md">Download PDF</button>
-              <button onClick={() => setShowReceipt(false)} className="bg-red-600 text-white px-4 py-2 rounded-md">Close</button>
+            <div className="d-flex justify-content-between mt-4">
+              <button onClick={generateReceiptPDF} className="btn btn-success">Download PDF</button>
+              <button onClick={() => setShowReceipt(false)} className="btn btn-danger">Close</button>
             </div>
           </div>
         </div>
       )}
- 
- 
+
       {/* Footer */}
-      <footer className="text-center mt-6 text-gray-500">
-  Designed by{" "}
-  <span className="bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 bg-clip-text text-transparent animate-pulse font-bold">
-    Prasad R
-  </span>
-</footer>
-
-
+      <footer className="text-center mt-5 text-muted">
+        Designed by{" "}
+        <span className="text-gradient font-weight-bold">
+          Prasad R
+        </span>
+      </footer>
     </div>
   );
 }

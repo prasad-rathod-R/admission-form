@@ -4,6 +4,8 @@ import LoginComponent from "./component/LoginComponent";
 import RegisterComponent from "./component/RegisterComponent";
 import DashboardComponent from "./component/DashboardComponent";
 import AdmissionForm from "./component/AdmissionForm";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 function App() {
