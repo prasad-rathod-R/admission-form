@@ -1,14 +1,25 @@
 import React from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import AdmissionForm from "./AdmissionForm";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LoginComponent from "./component/LoginComponent";
+import RegisterComponent from "./component/RegisterComponent";
+import DashboardComponent from "./component/DashboardComponent";
+import AdmissionForm from "./component/AdmissionForm";
+
 
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-      <AdmissionForm />
-      <ToastContainer position="top-right" autoClose={3000} />
+    <Router>
+    <div className="container">
+        <Routes>
+            <Route path="/" element={<LoginComponent />} />
+            <Route path="/register" element={<RegisterComponent />} />
+            <Route path="/login" element={<LoginComponent />} />
+            <Route path="/dashboard" element={<DashboardComponent />} />
+            <Route path="/admit" element={<AdmissionForm />} />
+
+        </Routes>
     </div>
+</Router>
   );
 }
 
