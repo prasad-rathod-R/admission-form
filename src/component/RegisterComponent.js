@@ -11,7 +11,19 @@ const RegisterComponent = () => {
     const [modalMessage, setModalMessage] = useState(''); // For modal message
     const [modalType, setModalType] = useState(''); // 'success' or 'error'
     const navigate = useNavigate();
+console.log('modalMessage: ',modalMessage);
 
+
+const handleClose =()=>{
+    console.log("success Start", modalType);
+    if (modalType == 'success') {
+        navigate('/login');  // Redirect to login page after success
+        setModalMessage('') 
+    }
+    if (modalType == 'error') {
+        setModalMessage('')
+    }
+}
     const handleRegister = async (e) => {
         e.preventDefault();
 
@@ -35,7 +47,7 @@ const RegisterComponent = () => {
             if (response.data && response.data.message === 'User registered successfully!') {
                 setModalMessage('User registered successfully!');
                 setModalType('success');
-                navigate('/login');  // Redirect to login page after success
+                // navigate('/login');  // Redirect to login page after success
             } else {
                 // Handle any unexpected message structure from the backend
                 setModalMessage('Registration failed. Please try again.');
@@ -120,7 +132,7 @@ const RegisterComponent = () => {
                     <div className="modal-content">
                         <div className={`modal-header ${modalType === 'error' ? 'bg-danger text-white' : 'bg-success text-white'}`}>
                             <h5 className="modal-title">{modalType === 'error' ? 'Error' : 'Success'}</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => setModalMessage('')}>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={handleClose}>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -128,7 +140,7 @@ const RegisterComponent = () => {
                             <p>{modalMessage}</p>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => setModalMessage('')}>Close</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleClose}>Close</button>
                         </div>
                     </div>
                 </div>

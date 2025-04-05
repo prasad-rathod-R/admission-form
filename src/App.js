@@ -4,6 +4,8 @@ import LoginComponent from "./component/LoginComponent";
 import RegisterComponent from "./component/RegisterComponent";
 import DashboardComponent from "./component/DashboardComponent";
 import AdmissionForm from "./component/AdmissionForm";
+import ContactFetch from "./component/ContactFetch";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -18,7 +20,8 @@ function App() {
             <Route path="/login" element={<LoginComponent />} />
             <Route path="/dashboard" element={<DashboardComponent />} />
             <Route path="/admit" element={<AdmissionForm />} />
-
+            <Route path="/contact" element={< ContactFetch />} />
+           
         </Routes>
     </div>
 </Router>

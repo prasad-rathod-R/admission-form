@@ -15,7 +15,8 @@ const LoginComponent = () => {
         try {
             const response = await AuthService.login({ username, password });
             if (response.data !== 'Invalid credentials') {
-                localStorage.setItem('token', response.data);
+                console.log(response.data,"resoning")
+                localStorage.setItem('token', response.data.jwtToken);
                 navigate('/admit');
             } else {
                 setMessage('Invalid credentials');
