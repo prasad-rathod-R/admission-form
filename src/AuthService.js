@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = "http://localhost:8081/api/auth/public";
+const API_BASE_URL = "https://kautilyaclassesbadami.onrender.com/api/auth/public";
 
 class AuthService {
     register(user) {

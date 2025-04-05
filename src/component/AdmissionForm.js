@@ -60,7 +60,7 @@ export default function AdmissionForm() {
 
     try {
       const orderRes = await axios.post(
-        "http://localhost:8081/api/admission/pay",
+        "https://kautilyaclassesbadami.onrender.com/api/admission/pay",
         { admissionAmount: formData.admissionAmount },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -80,7 +80,7 @@ export default function AdmissionForm() {
             paymentId: response.razorpay_payment_id,
           };
           console.log(response,"verifyres")
-          await axios.post("http://localhost:8081/api/admission/verify", {
+          await axios.post("https://kautilyaclassesbadami.onrender.com/api/admission/verify", {
                 order_id:id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature:response.razorpay_signature

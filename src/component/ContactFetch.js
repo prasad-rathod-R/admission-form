@@ -10,7 +10,7 @@ const ContactFetch = () => {
 
 
   useEffect(() => {
-    axios.get('http://localhost:8081/contact',{
+    axios.get('https://kautilyaclassesbadami.onrender.com/contact',{
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
