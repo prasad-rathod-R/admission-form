@@ -54,55 +54,52 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }) {
             </li>
             <li>
               <Link
-                to="/my-details"
-                className="nav-link link-dark d-flex align-items-center "
-                onClick={toggleSidebar}
-                style={{ gap: "12px" }}
-              >
-                {" "}
-                <i
-                  className="bi bi-person-lines-fill"
-                  style={{ fontSize: "1.5rem" }}
-                ></i>
-                My Profile
-              </Link>
+  to="/my-details"
+  className="nav-link link-dark d-flex align-items-center"
+  onClick={toggleSidebar}
+  style={{ gap: "12px" }}
+>
+  <i
+    className="bi bi-person-lines-fill"
+    style={{ fontSize: "1.5rem" }}
+  ></i>
+  <span className="d-none d-md-inline">My Profile</span>
+</Link>
+            </li>
+            <li>
+            <Link
+  to="/payment-details"
+  className="nav-link link-dark d-flex align-items-center"
+  style={{ gap: "12px" }}
+  onClick={toggleSidebar}
+>
+  <i
+    className="bi bi-credit-card"
+    style={{ fontSize: "1.5rem" }}
+  ></i>
+  <span className="d-none d-md-inline">Payment Details</span>
+</Link>
             </li>
             <li>
               <Link
-                to="/payment-details"
-                className="nav-link link-dark d-flex align-items-center"
-                style={{ gap: "12px" }}
-                onClick={toggleSidebar}
-              >
-                {" "}
-                <i
-                  className="bi bi-credit-card"
-                  style={{ fontSize: "1.5rem" }}
-                ></i>{" "}
-                Payment Details
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/admit"
-                className="nav-link link-dark d-flex align-items-center "
-                style={{ gap: "12px" }}
-                onClick={toggleSidebar}
-              >
-                {" "}
-                <i
-                  className="bi bi-journal-plus"
-                  style={{ fontSize: "1.5rem" }}
-                ></i>{" "}
-                Admission Form
-              </Link>
+  to="/admit"
+  className="nav-link link-dark d-flex align-items-center"
+  style={{ gap: "12px" }}
+  onClick={toggleSidebar}
+>
+  <i
+    className="bi bi-journal-plus"
+    style={{ fontSize: "1.5rem" }}
+  ></i>
+  <span className="d-none d-md-inline">Admission Form</span>
+</Link>
             </li>
             <li className="mt-3">
               <button
                 onClick={handleLogout}
                 className="btn btn-outline-danger w-100"
               >
-                <i className="bi bi-box-arrow-right"></i> Logout
+                <i className="bi bi-box-arrow-right"></i> <span className="d-none d-md-inline">Logout</span>
               </button>
             </li>
           </ul>
