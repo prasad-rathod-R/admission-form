@@ -42,19 +42,15 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }) {
         >
           <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
-              <Link
-                to="/"
-                className="nav-link link-dark d-flex align-items-center "
-                style={{ gap: "12px" }}
-                onClick={toggleSidebar}
-              >
-                {" "}
-                <i
-                  className="bi bi-house-door"
-                  style={{ fontSize: "1.5rem" }}
-                ></i>
-                Home
-              </Link>
+            <Link
+  to="/"
+  className="nav-link link-dark d-flex align-items-center"
+  style={{ gap: "12px" }}
+  onClick={toggleSidebar}
+>
+  <i className="bi bi-house-door" style={{ fontSize: "1.5rem" }}></i>
+  <span className="d-none d-md-inline">Home</span>
+</Link>
             </li>
             <li>
               <Link
