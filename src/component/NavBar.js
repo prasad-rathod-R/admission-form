@@ -38,7 +38,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }) {
       {sidebarOpen && (
         <div
           className="bg-light p-3 flex-column position-relative top-0 start-0 d-flex"
-          style={{ width: "100px", height: "100vh", zIndex: 1040 }}
+          style={{ width: "85px", height: "100vh", zIndex: 1040 }}
         >
           <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
