@@ -12,10 +12,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/register" element={<RegisterComponent />} />
+        <Route path="/login" element={<LoginComponent />} />
         <Route path="/" element={<DashboardComponent />}>
-          <Route path="/register" element={<RegisterComponent />} />
-          <Route path="/login" element={<LoginComponent />} />
-          <Route path="/dashboard" element={<DashboardComponent />} />
           <Route path="/admit" element={<AdmissionForm />} />
           <Route path="/contact" element={<ContactFetch />} />
         </Route>
