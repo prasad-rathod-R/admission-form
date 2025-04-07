@@ -8,14 +8,14 @@ import RegisterComponent from "./component/RegisterComponent";
 import AdmissionForm from "./component/AdmissionForm";
 import ContactFetch from "./component/ContactFetch";
 import Navbar from "./component/NavBar";
-
+import Home from "./component/Home";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/register" element={<RegisterComponent />} />
         <Route path="/login" element={<LoginComponent />} />
-
+        <Route path="/home" element={<Home />} />
         <Route path="/" element={<DashboardComponent />}>
           <Route path="/admit" element={<AdmissionForm />} />
           <Route path="/contact" element={<ContactFetch />} />
