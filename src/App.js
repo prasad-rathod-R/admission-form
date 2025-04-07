@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/register" element={<RegisterComponent />} />
         <Route path="/login" element={<LoginComponent />} />
-                    <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
         <Route path="/" element={<DashboardComponent />}>
           <Route path="/admit" element={<AdmissionForm />} />
           <Route path="/contact" element={<ContactFetch />} />
