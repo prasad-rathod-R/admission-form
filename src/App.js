@@ -7,6 +7,7 @@ import LoginComponent from "./component/LoginComponent";
 import RegisterComponent from "./component/RegisterComponent";
 import AdmissionForm from "./component/AdmissionForm";
 import ContactFetch from "./component/ContactFetch";
+import Home from "./component/Home";
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
       <Routes>
         <Route path="/register" element={<RegisterComponent />} />
         <Route path="/login" element={<LoginComponent />} />
-        <Route path="/" element={<DashboardComponent />}>
+        <Route path="/" element={<Home />}>
+           <Route path="/" element={<Home />}>
           <Route path="/admit" element={<AdmissionForm />} />
           <Route path="/contact" element={<ContactFetch />} />
         </Route>
